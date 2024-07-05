@@ -1,7 +1,7 @@
 export class TypeMeuble {
 
-    private _id!: number | null;
-    private _nom!: string | null;
+    public _id!: number | null;
+    public _nom!: string | null;
 
 
     public getId() : number | null {

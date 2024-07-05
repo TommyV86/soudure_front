@@ -3,13 +3,13 @@ import { TypeMeuble } from "../typeMeuble/type-meuble";
 
 export class Meuble {
 
-    private _nom!: string | null;
-    private _hauteur!: number | null;
-    private _longueur!: number | null;
-    private _largeur!: number | null;
-    private _prix!: number | null;
-    private _typeMeuble!: TypeMeuble | null;
-    private _matieres!: Matiere[] | null;
+    public _nom!: string | null;
+    public _hauteur!: number | null;
+    public _longueur!: number | null;
+    public _largeur!: number | null;
+    public _prix!: number | null;
+    public _typeMeuble!: TypeMeuble | null;
+    public _matieres!: Matiere[] | null;
 
     public getNom() : string | null {
         return this._nom;

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Meuble } from 'src/app/model/meuble/meuble';
 import { MeubleService } from 'src/app/service/meuble-service/meuble.service';
 
 @Component({
@@ -7,6 +8,9 @@ import { MeubleService } from 'src/app/service/meuble-service/meuble.service';
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent {
+
+  protected displayedMeubles! : Meuble[];
+  protected loading!: boolean;
 
   public constructor(
     private meubleServ : MeubleService
@@ -17,7 +21,18 @@ export class MainPageComponent {
   }
 
   public getMeubles() : void {
-    //todo
+    this.loading = true; 
+    this.meubleServ.getAll().subscribe({
+      next: (datas: Meuble[]) => {
+        console.log('datas products fetched: ', datas);
+        this.displayedMeubles = datas;
+      },
+      error: (e) => console.log(e),
+      complete: () => {
+        this.loading = false;
+        console.log('get all meubles complete');
+      }
+    })
   }
 
 }
