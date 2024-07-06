@@ -38,7 +38,7 @@ export class MeubleService {
     return this.httpClient.get(
     `${this.constantUtil.getLocalHost() + 
       this.constantUtil.getUrlMeuble() +
-      this.urlAllByIdTypeMeuble}?idParam=${idParam}`
+      this.urlAllByIdTypeMeuble}?id=${idParam}`
     );
   }
 }

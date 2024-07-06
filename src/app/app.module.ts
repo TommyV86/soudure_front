@@ -9,6 +9,7 @@ import { HeaderComponent } from './component/public/header/header.component';
 import { FooterComponent } from './component/public/footer/footer.component';
 import { MainPageComponent } from './component/public/main-page/main-page.component';
 import { DetailsMeubleComponent } from './component/public/details-meuble/details-meuble.component';
+import { SelectionComponent } from './component/public/selection/selection.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { DetailsMeubleComponent } from './component/public/details-meuble/detail
     HeaderComponent,
     FooterComponent,
     MainPageComponent,
-    DetailsMeubleComponent
+    DetailsMeubleComponent,
+    SelectionComponent
   ],
   imports: [
     BrowserModule,

@@ -22,17 +22,19 @@
           </li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" routerLink="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               nos selections
-            </a>
+            </div>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" routerLink="" fragment="propos">chaises</a></li>
+              <li><a class="dropdown-item" [routerLink]="['selection', '50']">chaises</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" routerLink="" fragment="propos">tables</a></li>
+              <li><a class="dropdown-item" [routerLink]="['selection', '48']">tables</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" routerLink="" fragment="propos">étagères</a></li>
+              <li><a class="dropdown-item" [routerLink]="['selection', '49']">étagères</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" routerLink="" fragment="propos">portails</a></li>
+              <li><a class="dropdown-item" [routerLink]="['selection', '51']">portails</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" [routerLink]="['selection', '52']">décoration</a></li>
             </ul>
           </li>
 

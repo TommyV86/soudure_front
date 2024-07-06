@@ -1,0 +1,21 @@
+<h2 class="title-main">Bienvenue ! Découvrez les meubles réalisable par nos soins</h2>
+
+<div *ngIf="loading" class="loading">
+  <p class="text-loading">Chargement des données...</p>
+  <div class="spinner-border text-warning" role="status"></div>
+</div>
+
+<div *ngIf="!loading">
+
+  <div class="card-container" *ngFor="let meuble of meubles">
+    <div class="card">
+      <img src="../../../../assets/{{meuble._nom}}.png" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{meuble._nom}}</h5>
+        <p class="card-text">{{meuble._prix}} €</p>
+        <a [routerLink]="['../../details-meuble', meuble._nom]" class="btn btn-primary">details</a>
+      </div>
+    </div>
+  </div>
+
+</div>

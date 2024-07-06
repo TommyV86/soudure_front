@@ -15,7 +15,8 @@
             <p class="card-text">largeur : {{meuble._largeur}} cm</p> 
             <p class="card-text">{{meuble._prix}} € / pièce</p>
 
-            <a class="back" [routerLink]="['']" class="btn btn-primary">retour</a>
+            <a class="back" [routerLink]="['../../selection', meuble._typeMeubleDto?._id]" class="btn btn-primary">aller à sa selection</a>
+            <a class="back" [routerLink]="['']" class="btn btn-primary">retour à l'accueil</a>
         </div>
 
     </div>

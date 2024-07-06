@@ -8,7 +8,7 @@ export class Meuble {
     public _longueur!: number | null;
     public _largeur!: number | null;
     public _prix!: number | null;
-    public _typeMeuble!: TypeMeuble | null;
+    public _typeMeubleDto!: TypeMeuble | null;
     public _matieres!: Matiere[] | null;
 
     public getNom() : string | null {
@@ -32,7 +32,7 @@ export class Meuble {
     }
 
     public getTypeMeuble() : TypeMeuble | null {
-        return this._typeMeuble;
+        return this._typeMeubleDto;
     }
 
     public getMatieres() : Matiere[] | null | undefined {
