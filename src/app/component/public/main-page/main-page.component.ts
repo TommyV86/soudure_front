@@ -17,6 +17,7 @@ export class MainPageComponent {
   ){}
 
   public ngOnInit() : void {
+    window.scrollTo(0, 0);
     this.getMeubles();
   }
 
