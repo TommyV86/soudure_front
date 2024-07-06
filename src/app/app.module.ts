@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './component/public/header/header.component';
 import { FooterComponent } from './component/public/footer/footer.component';
 import { MainPageComponent } from './component/public/main-page/main-page.component';
-import { DetailsMeubleComponent } from './component/details-meuble/details-meuble.component';
+import { DetailsMeubleComponent } from './component/public/details-meuble/details-meuble.component';
 
 @NgModule({
   declarations: [
