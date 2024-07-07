@@ -13,6 +13,7 @@ export class SelectionComponent {
   protected loading!: boolean;
   protected typeMeubleId!: string;
   protected meubles!: Meuble[];
+  protected typeMeubleName!: string | null | undefined;
 
   public constructor(
     private route: ActivatedRoute,
@@ -20,10 +21,10 @@ export class SelectionComponent {
   ){}
 
   public ngOnInit() : void {
-    window.scrollTo(0, 0);
     this.route.paramMap.subscribe(params => {
       this.typeMeubleId = String(params.get('id'));
       this.getMeublesByIdTypeMeuble();
+      window.scrollTo(0, 0);
     })
   }
 
@@ -32,6 +33,7 @@ export class SelectionComponent {
     this.meubleServ.getUrlAllByIdTypeMeuble(this.typeMeubleId).subscribe({
       next:(datas: Meuble[])=>{
         this.meubles = datas;
+        this.typeMeubleName =this.meubles.at(0)?._typeMeubleDto?._nom;
         console.log('products ',this.typeMeubleId,':', this.meubles);        
       },
       error:(e)=>{

@@ -1,0 +1,23 @@
+<div class="main-container">
+
+    <div class="form-container">
+        
+        <h4 class="title-main">Contactez nous pour nous proposer votre idée sur mesure ou pour tout autre information</h4>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <input formControlName="from_email" class="form-control" type="mail"  placeholder="Votre email ..." aria-label="email" required>
+            <input formControlName="subject" class="form-control" type="text" placeholder="Votre sujet ..." aria-label="username" required>
+            
+            <textarea formControlName="text_content" class="form-control" type="text" placeholder="Votre message ..." required></textarea>
+            <div class="invalid-feedback">
+                Merci d'entrer un message
+            </div>
+
+
+            <button [disabled]="form.invalid" class="btn" type="submit" >Envoyer</button>
+
+        </form>
+
+    </div>
+
+</div>
