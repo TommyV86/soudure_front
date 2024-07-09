@@ -44,6 +44,22 @@ textarea{
 }
 
 @media (max-width: 1440px) {
+    .title-contact{
+        width: 110%;
+        margin-left: -5%;
+    }
 
+    .form-container{
+        width: 90%; 
+        margin: 25% 2% 0 5%;
+    }
+
+    input, textarea{
+        margin: 1%;
+    }
+
+    .btn{
+        margin:5% 0 5% 68%;
+    }
 }
 

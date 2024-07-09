@@ -65,4 +65,29 @@
 
 @media (max-width: 1440px) {
 
+    .title-main{
+        margin: 25% 5% 5% 8%;
+        text-align: center;
+    }
+    
+    .nav-item{
+        margin-left: auto;
+    }
+
+    .card-container{
+        display: inline-block;
+        margin-left: 10%;
+    }
+
+    .loading{
+        margin: 28% 5% 9.8% 25%; 
+    }
+
+    .spinner-border{
+        margin-left: 28%;
+    }
+
+    #mail-failed{
+        margin-left: 9%;
+    }
 }
