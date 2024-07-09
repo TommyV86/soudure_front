@@ -1,7 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+.title-main{
+    margin: 8% 5% 5% 29%;
+}
+
 .card-container{
     display: inline-block;
-    margin-left: 2.3%;
+    margin-left: 5.4%;
     margin-top: 2.5%;
     margin-bottom: 2.5%;
 }
@@ -14,16 +18,51 @@
     width: 15rem;
 }
 
-
-
 .loading{
     margin: 10% 5% 9.8% 45%; 
 }
 
-.title-main{
-    margin: 8% 5% 5% 23%;
+.spinner-border{
+    margin-left: 7.5%;
 }
 
-#mail-message{
-    margin-bottom: 15%;
+
+#mail-success ,#mail-failed{
+    margin-bottom: 15%;   
+}
+
+#mail-success{
+    margin-left: 9%;
+    
+}
+
+#mail-failed{
+    margin-left: 25%;
+}
+
+@media (max-width: 1550px) {
+
+    .title-main{
+        margin: 8% 5% 5% 23%;
+    }
+
+    .card-container{
+        margin-left: 2.3%;
+    }
+
+    .spinner-border{
+        margin-left: 10%;
+    }
+
+    #mail-success{
+        margin-left: 9%;
+    }
+
+    #mail-failed{
+        margin-left: 18%;
+    }
+}
+
+@media (max-width: 1440px) {
+
 }

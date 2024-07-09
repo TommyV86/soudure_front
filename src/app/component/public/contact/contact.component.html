@@ -2,17 +2,43 @@
 
     <div class="form-container">
         
-        <h4 class="title-main">Contactez nous pour nous proposer votre idée sur mesure ou pour tout autre information</h4>
+        <h4 class="title-contact">Une idée sur mesure ou un renseignement détaillé ?</h4>
 
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <input formControlName="from_email" class="form-control" type="mail"  placeholder="Votre email ..." aria-label="email" required>
-            <input formControlName="subject" class="form-control" type="text" placeholder="Votre sujet ..." aria-label="username" required>
-            
-            <textarea formControlName="text_content" class="form-control" type="text" placeholder="Votre message ..." required></textarea>
-            <div class="invalid-feedback">
-                Merci d'entrer un message
+            <input formControlName="firstname" class="form-control" type="text"  placeholder="Votre nom ..." required>
+            <div class="err-message" *ngIf="form.get('firstname')?.hasError('required') && form.get('firstname')?.touched">
+                Le nom est requis.
+            </div>
+            <input formControlName="lastname" class="form-control" type="text"  placeholder="Votre prenom ..." required>
+            <div class="err-message" *ngIf="form.get('lastname')?.hasError('required') && form.get('lastname')?.touched">
+                Le prenom est requis.
             </div>
 
+            <input formControlName="from_email" class="form-control" type="mail"  placeholder="Votre email ..." required>
+            <div class="err-message" *ngIf="form.get('from_email')?.hasError('required') && form.get('from_email')?.touched">
+                Le mail est requis.
+            </div>
+            <div class="err-message" *ngIf="form.get('from_email')?.hasError('email') && form.get('from_email')?.touched">
+                Le format du mail est incorrect
+            </div>
+
+            <input formControlName="tel_number" class="form-control" type="tel" placeholder="Votre numéro de telephone ..." required>
+            <div class="err-message" *ngIf="form.get('tel_number')?.hasError('required') && form.get('tel_number')?.touched">
+                Le numéro de téléphone est requis
+            </div>
+            <div class="err-message" *ngIf="form.get('tel_number')?.hasError('pattern') && form.get('tel_number')?.touched">
+                Le numéro de téléphone doit comporter exactement 10 chiffres
+            </div>
+
+            <input formControlName="subject" class="form-control" type="text" placeholder="Votre sujet ..." required>
+            <div class="err-message" *ngIf="form.get('subject')?.hasError('required') && form.get('subject')?.touched">
+                Merci d'entrer votre votre sujet
+            </div>
+
+            <textarea formControlName="text_content" class="form-control" type="text" placeholder="Votre message ..." required></textarea>
+            <div class="err-message" *ngIf="form.get('text_content')?.hasError('required') && form.get('text_content')?.touched">
+                Merci d'entrer votre message
+            </div>
 
             <button [disabled]="form.invalid" class="btn" type="submit" >Envoyer</button>
 

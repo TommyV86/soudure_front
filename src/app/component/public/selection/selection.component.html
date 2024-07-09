@@ -6,7 +6,7 @@
 
 <div *ngIf="!loading">
 
-  <h2 class="title-main">Selection de {{ typeMeubleName }}s</h2>
+  <h2 class="title-main">Selection choisie : {{ typeMeubleName }}s</h2>
   <div class="card-container" *ngFor="let meuble of meubles">
     <div class="card">
       <img src="../../../../assets/{{meuble._nom}}.png" class="card-img-top" alt="...">

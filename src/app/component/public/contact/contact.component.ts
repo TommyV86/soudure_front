@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmailService } from 'src/app/service/email-service/email.service';
@@ -23,18 +23,24 @@ export class ContactComponent {
     this.form = this.fb.group({
       subject: ['', Validators.required],
       from_email: ['', [Validators.required, Validators.email]],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
       text_content: ['', Validators.required],
+      tel_number: ['', [Validators.required, Validators.pattern("^[0-9]{10}$")]]
     })
   }
 
   public onSubmit() : void {
 
-    const { subject, from_email, text_content } = this.form.value;
+    const { subject, from_email, text_content, tel_number, firstname, lastname } = this.form.value;
 
     const email = {
       "subject": subject,
       "from_email": from_email,
-      "text_content": text_content
+      "text_content": text_content,
+      "tel_number": tel_number,
+      "firstname": firstname,
+      "lastname": lastname
     }
 
     // serv mail 
