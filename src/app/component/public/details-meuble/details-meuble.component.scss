@@ -1,5 +1,5 @@
 .card{
-    margin: 5% 5% 2% 45%;
+    margin: -6% 5% 25% 65%;
 }
 
 .card-body{
@@ -10,10 +10,22 @@
     margin: 5px !important;
 }
 
+.canvas-container{
+    width: 50%; 
+    height: 300px;
+    margin-left: -15%;
+}
+
 @media (max-width: 1440px) {
     .card{
         width: 59%;
         height: 50%;
-        margin: 32% 5% 20% 22%;
-    }  
+        margin: 35% 5% 20% 22%;
+    }   
+
+    .canvas-container{
+        margin:0 0 50% 0;
+    }
+
+
 }

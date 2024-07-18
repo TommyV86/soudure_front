@@ -1,3 +1,5 @@
+<div #canvasContainer class="canvas-container"></div>
+
 <div *ngIf="loading" class="loading">
     <p class="text-loading">Chargement du produit ...</p>
     <div class="spinner-border text-warning" role="status"></div>
@@ -6,19 +8,16 @@
 <div *ngIf="!loading">
 
     <div class="card">
-
-        <img src="../../../assets/{{meuble._nom}}.png" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">{{meuble._nom}}</h5>
             <p class="card-text">hauteur : {{meuble._hauteur}} cm</p>
             <p class="card-text">longueur : {{meuble._longueur}} cm</p> 
             <p class="card-text">largeur : {{meuble._largeur}} cm</p> 
             <p class="card-text">{{meuble._prix}} € / pièce</p>
-
+    
             <a class="back" [routerLink]="['../../selection', meuble._typeMeubleDto?._id]" class="btn btn-primary">aller à sa selection</a>
             <a class="back" [routerLink]="['']" class="btn btn-primary">retour à l'accueil</a>
         </div>
-
     </div>
 
 </div>
