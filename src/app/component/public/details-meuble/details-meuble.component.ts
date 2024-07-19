@@ -24,11 +24,10 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
   private camera!: THREE.PerspectiveCamera;
   private model!: THREE.Object3D;
   private controls!: OrbitControls;
-  private typeNameSubject = new BehaviorSubject<string | null | undefined>(null);
-  private typeName!: string | null | undefined;
-  private typeNameSubscription: Subscription | undefined;
-  private height: Subscription | undefined;
-  private weight: Subscription | undefined;
+  private meubleSubbed!: Meuble | null | undefined;
+  private meubleSubject = new BehaviorSubject<Meuble | null | undefined>(null);
+  private meubleSubscription: Subscription | undefined;
+
 
   public constructor(
     private route: ActivatedRoute,
@@ -45,20 +44,20 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
 
   public ngAfterViewInit(): void {
 
-    this.typeNameSubscription = this.typeNameSubject.subscribe(typeName => {
-      if (this.canvasRef && typeName) {
+    this.meubleSubscription = this.meubleSubject.subscribe(meubleSubbed => {
+      if (this.canvasRef && meubleSubbed) {
         this.initThreeJS();
         this.loadModel();
         this.animate();
       } else {
-        console.error('canvasRef or typeName is not defined');
+        console.error('canvasRef or meubleSubbed is not defined');
       }}
     )
   }
 
   public ngOnDestroy(): void {
-    // Unsubscribe from typeNameSubject to prevent memory leaks
-    this.typeNameSubscription?.unsubscribe();
+    // Unsubscribe from meubleSubbedSubject to prevent memory leaks
+    this.meubleSubscription?.unsubscribe();
     window.removeEventListener('resize', this.onWindowResize);
   }
 
@@ -68,8 +67,8 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
       next:(data: Meuble)=>{
         this.meuble = data;
         console.log('product', this.meuble);      
-        this.typeName = this.meuble._typeMeubleDto?._nom;
-        this.typeNameSubject.next(this.typeName);   
+        this.meubleSubbed = this.meuble;
+        this.meubleSubject.next(this.meubleSubbed);   
       },
       error:(e)=>{
         console.log('error : ', e);
@@ -116,11 +115,7 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
     const loader = new GLTFLoader();
     loader.load(`assets/${this.meuble._typeMeubleDto?._nom}/${this.productName}.glb`, (gltf) => {
       this.model = gltf.scene;
-
-      //condition à mettre en place avec hauteur et largeur : 
-      // pour les grands meubles : 
-      this.model.scale.set(2, 2, 2)
-      //this.model.scale.set(3, 3, 3); // Exemple d'échelle doublée
+      this.updateModelSize();
       this.centerObject();
       this.scene.add(this.model);
     }, undefined, function (error) {
@@ -130,15 +125,6 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
 
   private animate = (): void => {
     requestAnimationFrame(this.animate);
-
-    // Faire tourner l'objet sur lui-même
-    // if (this.model) {
-    //   const axis = new THREE.Vector3(0, 1, 0); // Axe Y local
-    //   const angle = 0.01; // Ajustez la valeur pour contrôler la vitesse de rotation
-    //   this.model.rotateOnAxis(axis, angle);
-    // }
-  
-
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
   }
@@ -160,6 +146,18 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
   
       // Déplacer l'objet pour le centrer autour de son pivot
       this.model.position.add(offset);
+    }
+  }
+
+  private updateModelSize(): void {
+    if (this.model) {
+      // grands meubles
+      if (this.meuble._longueur != null && this.meuble._longueur >= 190) {
+        this.model.scale.set(1.5, 1.5, 1.5);
+      // petits meubles
+      } else if (this.meuble._longueur != null && this.meuble._longueur >= 100) {
+        this.model.scale.set(3, 3, 3);        
+      }
     }
   }
 }
