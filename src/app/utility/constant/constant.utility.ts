@@ -5,7 +5,8 @@ import { Injectable } from "@angular/core";
 })
 export class ConstantUtility {
 
-    private localhost: string = 'https://localhost:8000/';
+    //private localhost: string = 'https://localhost:8000/';
+    private localhost: string = 'https://steelcraft.shop/public';
     private urlMeubleRoute : string = "meuble/";
 
     public getLocalHost() : string {

@@ -113,7 +113,7 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
 
   private loadModel(): void {
     const loader = new GLTFLoader();
-    loader.load(`assets/${this.meuble._typeMeubleDto?._nom}/${this.productName}.glb`, (gltf) => {
+    loader.load(`assets/glb/${this.meuble._typeMeubleDto?._nom}/${this.productName}.glb`, (gltf) => {
       this.model = gltf.scene;
       this.updateModelSize();
       this.centerObject();
