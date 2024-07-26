@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 .title-main{
     margin: 8% 5% 5% 29%;
+    color: rgb(209, 209, 209);
 }
 
 .card-container{
@@ -11,7 +12,7 @@
 }
 
 .card{
-    border: 0.5px solid rgb(173, 173, 173);
+    border: 0.5px solid rgb(94, 94, 94);
     border-radius: 10px;
     box-shadow: 2px 2px 10px 2px grey;
     margin: 10px; 
@@ -42,6 +43,39 @@
 
 #mail-failed{
     margin-left: 25%;
+}
+
+.navbar, .card, footer{
+    background-image: url('../src/assets/image/texture/steel3.jpg');
+    background-size: cover; /* Pour couvrir toute la navbar */
+    background-position: center; /* Centrer l'image */
+    background-repeat: no-repeat; /* Pour éviter la répétition de l'image */
+}
+
+.navbar{
+    background-attachment: fixed; /* Pour que l'image reste fixe */
+}
+
+.btn {
+    background-color: rgb(223, 221, 221);
+    border: 0.1px rgb(94, 94, 94);
+    box-shadow: 2px 2px 10px 2px grey;
+}
+
+body{
+    background-image: url('../src/assets/image/texture/body.jpeg');  
+    background-size: cover; /* Pour couvrir toute la navbar */
+    background-position: center; /* Centrer l'image */
+    background-repeat: no-repeat; /* Pour éviter la répétition de l'image */
+}
+
+.text-loading{
+    color: rgb(209, 209, 209);
+}
+
+.mail{
+    text-decoration: none;
+    color: rgb(63, 135, 138);
 }
 
 @media (max-width: 1550px) {

@@ -23,6 +23,12 @@ a:active {
     color: rgb(255, 187, 0);
 }
 
+.dropdown-menu{
+    background-image: url('../../../../assets/image/texture/steel.jpeg');
+    background-size: cover; /* Pour couvrir tout l'element */
+    background-repeat: no-repeat; /* Pour éviter la répétition de l'image */
+}
+
 
 
 @media (max-width: 1550px) {

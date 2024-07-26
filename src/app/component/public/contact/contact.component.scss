@@ -20,7 +20,9 @@ textarea{
 }
 
 .btn{
-    border: 1px solid rgb(180, 180, 180);
+    background-color: rgb(223, 221, 221);
+    border: 0.1px rgb(94, 94, 94);
+    box-shadow: 2px 2px 10px 2px grey;
     margin-left: 80%;
 }
 
@@ -51,7 +53,8 @@ textarea{
 
     .form-container{
         width: 90%; 
-        margin: 25% 2% 0 5%;
+        margin: 25% 2% 4% 5%;
+        background-image: url('../../../../../src/assets/image/texture/steel3.jpg');
     }
 
     input, textarea{
@@ -59,7 +62,7 @@ textarea{
     }
 
     .btn{
-        margin:5% 0 5% 68%;
+        margin:5% 0 5% 75%;
     }
 }
 

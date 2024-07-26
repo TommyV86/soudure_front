@@ -49,10 +49,8 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
         this.initThreeJS();
         this.loadModel();
         this.animate();
-      } else {
-        console.error('canvasRef or meubleSubbed is not defined');
-      }}
-    )
+      }
+    })
   }
 
   public ngOnDestroy(): void {
@@ -88,12 +86,12 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setClearColor(0xffffff); 
+    this.renderer.setClearColor(0x000000, 0); // Le second paramètre 0 rend le fond transparent
     this.canvasRef.nativeElement.appendChild(this.renderer.domElement);
 
     // Ajouter des lumières à la scène
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    const light = new THREE.DirectionalLight(0xffffff, 2);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 5);
     light.position.set(0, 1, 1).normalize();
     this.scene.add(light);
     this.scene.add(ambientLight);
@@ -157,7 +155,7 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
       // petits meubles
       } else if (this.meuble._longueur != null && this.meuble._longueur >= 100 && this.meuble._typeMeubleDto?._nom != 'étagere') {
         this.model.scale.set(3, 3, 3);   
-        // etageres     
+      // etageres     
       } else if (this.meuble._hauteur != null && this.meuble._hauteur >= 147) {
         this.model.scale.set(2, 2, 2);
       }
