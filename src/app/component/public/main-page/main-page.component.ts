@@ -25,13 +25,11 @@ export class MainPageComponent {
     this.loading = true; 
     this.meubleServ.getAll().subscribe({
       next: (datas: Meuble[]) => {
-        console.log('datas products fetched: ', datas);
         this.displayedMeubles = datas;
       },
       error: (e) => console.log(e),
       complete: () => {
         this.loading = false;
-        console.log('get all meubles complete');
       }
     })
   }

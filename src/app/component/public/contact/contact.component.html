@@ -39,8 +39,17 @@
             <div class="err-message" *ngIf="form.get('text_content')?.hasError('required') && form.get('text_content')?.touched">
                 Merci d'entrer votre message
             </div>
+            <input type="text" formControlName="name" style="display: none;">
 
-            <button [disabled]="form.invalid" class="btn" type="submit" >Envoyer</button>
+            <div *ngIf="loading" class="loading">
+                <div class="spinner-border text-warning" role="status"></div>
+            </div>
+
+            <div *ngIf="!loading">
+                <button [disabled]="form.invalid || loading" class="btn" type="submit" >Envoyer</button>
+            </div>
+            
+            
 
         </form>
 

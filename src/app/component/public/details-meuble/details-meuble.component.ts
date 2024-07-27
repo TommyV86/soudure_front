@@ -64,7 +64,6 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
     this.meubleServ.getByName(this.productName).subscribe({
       next:(data: Meuble)=>{
         this.meuble = data;
-        console.log('product', this.meuble);      
         this.meubleSubbed = this.meuble;
         this.meubleSubject.next(this.meubleSubbed);   
       },
@@ -73,7 +72,6 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
       },
       complete:()=>{
         this.loading = false;
-        console.log('get by name complete');
       }
     })
   }

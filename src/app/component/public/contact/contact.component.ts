@@ -11,6 +11,7 @@ import { EmailService } from 'src/app/service/email-service/email.service';
 export class ContactComponent {
 
   protected form!: FormGroup;
+  protected loading: boolean = false;
 
   public constructor(
     private mailServ : EmailService,
@@ -26,11 +27,21 @@ export class ContactComponent {
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       text_content: ['', Validators.required],
-      tel_number: ['', [Validators.required, Validators.pattern("^[0-9]{10}$")]]
-    })
+      tel_number: ['', [Validators.required, Validators.pattern("^[0-9]{10}$")]],
+      name: ['']
+    });
+
+    
   }
 
   public onSubmit() : void {
+
+    this.loading = true;
+
+    if (this.form.get('name')?.value) {
+      console.log('Spam detected');
+      return;
+    }
 
     const { subject, from_email, text_content, tel_number, firstname, lastname } = this.form.value;
 
@@ -49,14 +60,17 @@ export class ContactComponent {
         //redirection mail success
         this.router.navigate(["mail-success"]);
         console.log('email sended', res);
+        this.loading = false
       },
       error:(e)=> {
         //redirection mail failed
         this.router.navigate(["mail-failed"]);
         console.log('error : ', e);
+        this.loading = false
       },
       complete:()=> {
         console.log('email sender complete');
+        this.loading = false
       }
     });
   }

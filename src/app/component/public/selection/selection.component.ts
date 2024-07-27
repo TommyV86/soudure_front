@@ -34,14 +34,12 @@ export class SelectionComponent {
       next:(datas: Meuble[])=>{
         this.meubles = datas;
         this.typeMeubleName =this.meubles.at(0)?._typeMeubleDto?._nom;
-        console.log('products ',this.typeMeubleId,':', this.meubles);        
       },
       error:(e)=>{
         console.log('error : ', e);
       },
       complete:()=>{
         this.loading = false;
-        console.log('get by type id complete');
       }
     })
   }
