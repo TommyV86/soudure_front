@@ -29,14 +29,35 @@ a:active {
     background-repeat: no-repeat; /* Pour éviter la répétition de l'image */
 }
 
-
+.navbar-nav {
+    margin-left: auto;
+}
 
 @media (max-width: 1550px) {
 
 }
 
 @media (max-width: 1440px) {
-    
 
+    .container{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
     
+    .navbar-toggler {
+        margin-right: auto; /* Ensures the burger menu stays on the left */
+    }
+      
+    .navbar-brand {
+        margin-right: 35%; /* Ensures the brand name is centered/aligned correctly */
+    }
+        
+    .nav-item {
+        margin-left: 0%;
+    }   
+    
+    .ms-auto {
+        margin-left: auto !important; /* Utilisez margin-left pour les langues LTR, ou ajustez pour RTL */
+    }
 }

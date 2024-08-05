@@ -24,10 +24,10 @@ export class ContactComponent {
     this.form = this.fb.group({
       subject: ['', Validators.required],
       from_email: ['', [Validators.required, Validators.email]],
-      firstname: ['', Validators.required],
-      lastname: ['', Validators.required],
+      firstname: [''],
+      lastname: [''],
       text_content: ['', Validators.required],
-      tel_number: ['', [Validators.required, Validators.pattern("^[0-9]{10}$")]],
+      tel_number: ['', Validators.pattern("^[0-9]{10}$")],
       name: ['']
     });
 
@@ -59,7 +59,6 @@ export class ContactComponent {
       next:(res)=> {
         //redirection mail success
         this.router.navigate(["mail-success"]);
-        console.log('email sended', res);
         this.loading = false
       },
       error:(e)=> {
@@ -69,7 +68,6 @@ export class ContactComponent {
         this.loading = false
       },
       complete:()=> {
-        console.log('email sender complete');
         this.loading = false
       }
     });

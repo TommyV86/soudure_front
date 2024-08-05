@@ -17,6 +17,10 @@
     border-radius: 15px;
 }
 
+.loading{
+    margin-top: 2% !important; 
+}
+
 @media (max-width: 1440px) {
     .card{
         width: 59%;
@@ -28,5 +32,8 @@
         margin:0 0 60% 0;
     }
 
-
+    .loading{
+        margin-top: 0 !important; 
+        margin-bottom: 100% !important;
+    }
 }

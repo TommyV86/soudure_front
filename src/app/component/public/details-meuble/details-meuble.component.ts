@@ -85,12 +85,23 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setClearColor(0x000000, 0); // Le second paramètre 0 rend le fond transparent
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+
     this.canvasRef.nativeElement.appendChild(this.renderer.domElement);
 
     // Ajouter des lumières à la scène
-    const light = new THREE.DirectionalLight(0xffffff, 2);
-    const ambientLight = new THREE.AmbientLight(0xffffff, 5);
+    const light = new THREE.DirectionalLight(0xffffff, 4);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 2);
     light.position.set(0, 1, 1).normalize();
+    light.castShadow = true;
+    light.shadow.mapSize.width = 2048;
+    light.shadow.mapSize.height = 2048;
+    light.shadow.camera.near = 0.5;
+    light.shadow.camera.far = 500;
+    light.shadow.camera.left = -50;
+    light.shadow.camera.right = 50;
+    light.shadow.camera.top = 50;
+    light.shadow.camera.bottom = -50;
     this.scene.add(light);
     this.scene.add(ambientLight);
 

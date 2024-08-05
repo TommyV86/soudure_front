@@ -7,6 +7,7 @@ import { SelectionComponent } from './component/public/selection/selection.compo
 import { ContactComponent } from './component/public/contact/contact.component';
 import { MailSuccessComponent } from './component/public/mail-pages/mail-success/mail-success.component';
 import { MailFailedComponent } from './component/public/mail-pages/mail-failed/mail-failed.component';
+import { FormMeubleComponent } from './component/form-meuble/form-meuble.component';
 
 const routes: Routes = [
   { path: '', component: MainPageComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'mail-success', component: MailSuccessComponent },
   { path: 'mail-failed', component: MailFailedComponent },
+  { path: 'form-meuble', component: FormMeubleComponent },
 ];
 
 @NgModule({

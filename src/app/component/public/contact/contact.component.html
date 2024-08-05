@@ -5,13 +5,14 @@
         <h4 class="title-contact">Une idée sur mesure ou un renseignement détaillé ?</h4>
 
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <input formControlName="firstname" class="form-control" type="text"  placeholder="Votre nom ..." required>
-            <div class="err-message" *ngIf="form.get('firstname')?.hasError('required') && form.get('firstname')?.touched">
-                Le nom est requis.
-            </div>
-            <input formControlName="lastname" class="form-control" type="text"  placeholder="Votre prenom ..." required>
-            <div class="err-message" *ngIf="form.get('lastname')?.hasError('required') && form.get('lastname')?.touched">
-                Le prenom est requis.
+            <input formControlName="firstname" class="form-control" type="text"  placeholder="Votre nom ... (facultatif)">
+
+            <input formControlName="lastname" class="form-control" type="text"  placeholder="Votre prenom ... (facultatif)">
+
+            <input formControlName="tel_number" class="form-control" type="tel" placeholder="numéro de telephone ... (facultatif)">
+
+            <div class="err-message" *ngIf="form.get('tel_number')?.hasError('pattern') && form.get('tel_number')?.touched">
+                Le numéro de téléphone doit comporter exactement 10 chiffres
             </div>
 
             <input formControlName="from_email" class="form-control" type="mail"  placeholder="Votre email ..." required>
@@ -20,14 +21,6 @@
             </div>
             <div class="err-message" *ngIf="form.get('from_email')?.hasError('email') && form.get('from_email')?.touched">
                 Le format du mail est incorrect
-            </div>
-
-            <input formControlName="tel_number" class="form-control" type="tel" placeholder="Votre numéro de telephone ..." required>
-            <div class="err-message" *ngIf="form.get('tel_number')?.hasError('required') && form.get('tel_number')?.touched">
-                Le numéro de téléphone est requis
-            </div>
-            <div class="err-message" *ngIf="form.get('tel_number')?.hasError('pattern') && form.get('tel_number')?.touched">
-                Le numéro de téléphone doit comporter exactement 10 chiffres
             </div>
 
             <input formControlName="subject" class="form-control" type="text" placeholder="Votre sujet ..." required>
@@ -46,7 +39,7 @@
             </div>
 
             <div *ngIf="!loading">
-                <button [disabled]="form.invalid || loading" class="btn" type="submit" >Envoyer</button>
+                <button [disabled]="form.invalid || loading" class="btn" id="btn-form" type="submit" >Envoyer</button>
             </div>
             
             

@@ -2,46 +2,55 @@
 
   <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#"><h5>Steel Craft</h5></a>
+      
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      
+      <a class="navbar-brand" routerLink=""><h5>Steel Craft</h5></a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-
-          <li class="nav-item">
-            <a class="nav-link">nos profils (à venir)</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link">outils de réalisation (à venir)</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link">processus de création (à venir)</a>
-          </li>
+        <ul class="navbar-nav mb-2 mb-lg-0">
 
           <li class="nav-item dropdown">
             <div class="nav-link dropdown-toggle" id="dropDown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              nos selections
+              Nos selections
             </div>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" [routerLink]="['selection', '1']">tables</a></li>
+              <li><a class="dropdown-item" [routerLink]="['selection', '1']">Tables</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" [routerLink]="['selection', '2']">étagères</a></li>
-              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" [routerLink]="['selection', '2']">Etagères</a></li>
+              <!-- <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item">chaises (à venir)</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item">portails (à venir)</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item">décorations (à venir)</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item">portes (à venir)</a></li>
+              <li><a class="dropdown-item">portes (à venir)</a></li> -->
             </ul>
           </li>
 
+          <!-- <li class="nav-item">
+            <a class="nav-link" routerLink="form-meuble">Concevoir un meuble en 3d</a>
+          </li>
+
           <li class="nav-item">
-            <a class="nav-link" id="link-contact" routerLink="contact">contact</a>
+            <a class="nav-link" routerLink="">Meubles fabriqués à partir de matériels récupérés</a>
+          </li> -->
+          <!-- <li class="nav-item">
+            <a class="nav-link">Nos profils (à venir)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link">Outils de réalisation (à venir)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link">Processus de création (à venir)</a>
+          </li> -->
+
+          
+
+          <li class="nav-item">
+            <a class="nav-link" id="link-contact" routerLink="contact">Contact</a>
           </li>
           
         </ul>

@@ -14,6 +14,7 @@ import { ContactComponent } from './component/public/contact/contact.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MailSuccessComponent } from './component/public/mail-pages/mail-success/mail-success.component';
 import { MailFailedComponent } from './component/public/mail-pages/mail-failed/mail-failed.component';
+import { FormMeubleComponent } from './component/form-meuble/form-meuble.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MailFailedComponent } from './component/public/mail-pages/mail-failed/m
     SelectionComponent,
     ContactComponent,
     MailSuccessComponent,
-    MailFailedComponent
+    MailFailedComponent,
+    FormMeubleComponent
   ],
   imports: [
     BrowserModule,
