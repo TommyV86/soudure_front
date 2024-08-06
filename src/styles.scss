@@ -117,6 +117,13 @@ textarea{
     margin: 5% 0 5% 80%; 
 }
 
+.canvas-container{
+    width: 50%; 
+    height: 300px;
+    margin-left: -15%;
+    border-radius: 15px;
+}
+
 
 @media (max-width: 1550px) {
 
@@ -199,5 +206,9 @@ textarea{
 
     #btn-form{
         margin:5% 0 5% 75%;
+    }
+
+    .canvas-container{
+        margin:0 0 60% 0;
     }
 }

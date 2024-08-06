@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { HeaderComponent } from './component/public/header/header.component';
 import { FooterComponent } from './component/public/footer/footer.component';
@@ -14,7 +15,7 @@ import { ContactComponent } from './component/public/contact/contact.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MailSuccessComponent } from './component/public/mail-pages/mail-success/mail-success.component';
 import { MailFailedComponent } from './component/public/mail-pages/mail-failed/mail-failed.component';
-import { FormMeubleComponent } from './component/form-meuble/form-meuble.component';
+import { FormMeubleComponent } from './component/public/form-meuble/form-meuble.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { FormMeubleComponent } from './component/form-meuble/form-meuble.compone
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
