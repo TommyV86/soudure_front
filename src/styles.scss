@@ -120,6 +120,7 @@ textarea{
 .canvas-container{
     width: 50%; 
     height: 300px;
+    margin-top: 5%;
     margin-left: -15%;
     border-radius: 15px;
 }
@@ -157,6 +158,10 @@ textarea{
 
     #btn-form{
         margin-left: 75%;
+    }
+
+    .canvas-container{
+        margin: 5% 0 50% 0;
     }
 }
 
@@ -209,6 +214,6 @@ textarea{
     }
 
     .canvas-container{
-        margin:0 0 60% 0;
+        margin:5% 0 60% 0;
     }
 }
