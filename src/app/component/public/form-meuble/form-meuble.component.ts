@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { ThreeToolUtility } from 'src/app/utility/tool/threeTool.utility';
 import * as THREE from 'three';
 import { OrbitControls } from 'three-stdlib';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -8,7 +9,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
   templateUrl: './form-meuble.component.html',
   styleUrls: ['./form-meuble.component.scss']
 })
-export class FormMeubleComponent {
+export class FormMeubleComponent implements OnInit {
 
   @ViewChild('rendererContainer') rendererContainer!: ElementRef;
   private scene!: THREE.Scene;
@@ -19,6 +20,8 @@ export class FormMeubleComponent {
   private controls!: OrbitControls;
   private textureLoader: THREE.TextureLoader = new THREE.TextureLoader();
   private gltfLoader: GLTFLoader = new GLTFLoader();
+  private legMesh!: THREE.Group<THREE.Object3DEventMap>
+  private woodTexture!: THREE.Texture;
 
   // Form data
   protected formData = {
@@ -31,38 +34,41 @@ export class FormMeubleComponent {
   protected sizesTable = ['petit', 'grand'];
   protected sizesShelf = ['petit', 'moyen', 'grand', 'tres grand'];
   protected woodTypes = ['chene', 'chataigner'];
-  protected legTypes = ['type1', 'type2', 'type3', 'type4', 'type5'];
-
+  protected littleLegTypes = ['type1', 'type2', 'type3'];
+  protected tallLegTypes = ['type1', 'type2'];
 
   protected woodTextures = {
     chene : 'assets/image/texture/b1.jpg',
     chataigner : '/assets/image/texture/bois.jpg'
-  }
+  }  
   
-  //table basse
   protected littleFlatPaths = {
-    type_1 : 'assets/glb/piece/table_basse/plateau/plateau_tb1.glb',
-    type_2 : 'assets/glb/piece/table_basse/plateau/plateau_tb2.glb'
-  }
+    type_1: 'assets/glb/piece/table_basse/plateau/plateau_tb1.glb',
+    type_2: 'assets/glb/piece/table_basse/plateau/plateau_tb2.glb'
+  };
+
+  protected tallFlatPaths = {
+    type_1: 'assets/glb/piece/table/plateau/plateau_tl1.glb'
+  };
 
   protected litteFeetPaths = {
-    type_1 : 'assets/glb/piece/table_basse/pieds/pieds_table_basse.glb',
-    type_2 : 'assets/glb/piece/table_basse/pieds/pieds_table_basse_2.glb',
-    type_3 : 'assets/glb/piece/table_basse/pieds/pieds_table_basse_3.glb',
-  }
-
-
-  //table à manger
-  protected tallFlatPaths = {
-    type_1 : 'assets/glb/piece/table/plateau/plateau_tl1.glb'
-  }
+    type_1: 'assets/glb/piece/table_basse/pieds/pieds_table_basse.glb',
+    type_2: 'assets/glb/piece/table_basse/pieds/pieds_table_basse_2.glb',
+    type_3: 'assets/glb/piece/table_basse/pieds/pieds_table_basse_3.glb'
+  };
 
   protected tallFeetPaths = {
-    type_1 : 'assets/glb/piece/table/pieds/pieds_tl1.glb',
-    type_2 : 'assets/glb/piece/table/pieds/pieds_tl2.glb'
-  }
+    type_1: 'assets/glb/piece/table/pieds/pieds_tl1.glb',
+    type_2: 'assets/glb/piece/table/pieds/pieds_tl2.glb'
+  };
 
-  public constructor() { }
+  private tablePath! : string | undefined;
+  private legPath! : string | undefined;
+  private woodTexturePath!: string | undefined;
+  private material!: THREE.MeshStandardMaterial;
+
+
+  public constructor(private threeTollUtil: ThreeToolUtility) { }
 
   public ngOnInit(): void { }
 
@@ -71,16 +77,15 @@ export class FormMeubleComponent {
     this.animate();
   }
 
-  private initThreeJS() : void {
+  private initThreeJS(): void {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.renderer = new THREE.WebGLRenderer();
     this.renderer.setSize(312, 420);
-    this.renderer.setClearColor(0x000000, 0); // Le second paramètre 0 rend le fond transparent
+    this.renderer.setClearColor(0x000000, 0);
     this.rendererContainer.nativeElement.appendChild(this.renderer.domElement);
-    this.camera.position.z = 10;
+    this.camera.position.z = 5;
 
-    // Ajouter des lumières à la scène
     const light = new THREE.DirectionalLight(0xffffff, 4);
     const ambientLight = new THREE.AmbientLight(0xffffff, 2);
     light.position.set(0, 1, 1).normalize();
@@ -93,23 +98,18 @@ export class FormMeubleComponent {
     light.shadow.camera.right = 50;
     light.shadow.camera.top = 50;
     light.shadow.camera.bottom = -50;
+    
     this.scene.add(light);
     this.scene.add(ambientLight);
 
-    // Controls
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    // Désactiver le zoom et le déplacement
     this.controls.enableZoom = false;
     this.controls.enablePan = false;
-    
-    // Désactiver la rotation de la caméra, uniquement l'objet tourne sur lui-même
     this.controls.enableRotate = true;
-
-    // Désactiver l'inertie pour un contrôle plus précis
     this.controls.enableDamping = false;
   }
 
-  private createFurniture() : void {    
+  private createFurniture(): void {
     if (this.tableMesh) {
       this.scene.remove(this.tableMesh);
     }
@@ -117,100 +117,125 @@ export class FormMeubleComponent {
       this.scene.remove(this.shelfMesh);
     }
 
-    // Load the texture based on the selected wood type and leg type
-    const texturePath = this.woodTextures[this.formData.woodType as keyof typeof this.woodTextures];
-    //const legTexturePath = this.steelTextures[this.formData.legType as keyof typeof this.steelTextures];
-
-    // Load wood texture
-    const woodTexturePromise = new Promise<THREE.Texture>((resolve) => {
-      this.textureLoader.load(texturePath, resolve);
-    });
-
-    // Load leg texture
-    const legTexturePromise = new Promise<THREE.Texture>((resolve) => {
-      this.textureLoader.load('assets/image/texture/body.jpeg', resolve);
-    });
-    
-    // Wait for both textures to load
-    Promise.all([woodTexturePromise, legTexturePromise]).then(([woodTexture, legTexture]) => {
-      const woodMaterial = new THREE.MeshBasicMaterial({ map: woodTexture });
-      const legMaterial = new THREE.MeshBasicMaterial({ map: legTexture });
-
-      // Create the appropriate furniture based on the selected type
-      if (this.formData.furnitureType === 'table') {
-        this.createTable(woodMaterial, legMaterial);
-      } else if (this.formData.furnitureType === 'etagere') {
-        this.createShelf(woodMaterial, legMaterial);
-      }
-    });
-  }
-
-  private createTable(material: THREE.MeshBasicMaterial, legMaterial: THREE.MeshBasicMaterial) : void {
-    this.tableMesh = new THREE.Group();
-
-    const dimensions = this.formData.size === 'petit' ? { width: 5, depth: 3, height: 0.5, legHeight: 5, legThickness: 0.5 }
-                                                      : { width: 7, depth: 4, height: 0.5, legHeight: 6, legThickness: 0.5 };
-
-    // Table top
-    const tableTopGeometry = new THREE.BoxGeometry(dimensions.width, dimensions.height, dimensions.depth);
-    const tableTop = new THREE.Mesh(tableTopGeometry, material);
-    tableTop.position.y = dimensions.legHeight;
-    this.tableMesh.add(tableTop);
-
-    // Table legs
-    const legGeometry = new THREE.BoxGeometry(dimensions.legThickness, dimensions.legHeight, dimensions.legThickness);
-    const positions = [
-      { x: -dimensions.width / 2 + dimensions.legThickness / 2, y: dimensions.legHeight / 2, z: -dimensions.depth / 2 + dimensions.legThickness / 2 },
-      { x: dimensions.width / 2 - dimensions.legThickness / 2, y: dimensions.legHeight / 2, z: -dimensions.depth / 2 + dimensions.legThickness / 2 },
-      { x: -dimensions.width / 2 + dimensions.legThickness / 2, y: dimensions.legHeight / 2, z: dimensions.depth / 2 - dimensions.legThickness / 2 },
-      { x: dimensions.width / 2 - dimensions.legThickness / 2, y: dimensions.legHeight / 2, z: dimensions.depth / 2 - dimensions.legThickness / 2 }
-    ];
-
-    positions.forEach(pos => {
-      const leg = new THREE.Mesh(legGeometry, legMaterial);
-      leg.position.set(pos.x, pos.y, pos.z);
-      this.tableMesh.add(leg);
-    });
-
-    this.scene.add(this.tableMesh);
-  }
-
-  private createShelf(material: THREE.MeshBasicMaterial, legMaterial: THREE.MeshBasicMaterial) : void {
-    this.shelfMesh = new THREE.Group();
-
-    const sizes = {
-      petit: { width: 3, depth: 1, height: 4 },
-      moyen: { width: 4, depth: 1.5, height: 5 },
-      grand: { width: 5, depth: 2, height: 6 },
-      'tres grand': { width: 6, depth: 2.5, height: 7 },
-      gigantesque: { width: 7, depth: 3, height: 8 }
-    };
-
-    const dimensions = sizes[this.formData.size as keyof typeof sizes];
-
-    // Shelf
-    const shelfGeometry = new THREE.BoxGeometry(dimensions.width, dimensions.depth, dimensions.height);
-    const shelf = new THREE.Mesh(shelfGeometry, material);
-    shelf.position.y = dimensions.height / 2;
-    this.shelfMesh.add(shelf);
-
-    // Adding shelves
-    const numberOfShelves = 4;
-    for (let i = 1; i <= numberOfShelves; i++) {
-      const shelfBoard = new THREE.Mesh(new THREE.BoxGeometry(dimensions.width, 0.1, dimensions.depth), legMaterial);
-      shelfBoard.position.y = (i * (dimensions.height / (numberOfShelves + 1)));
-      this.shelfMesh.add(shelfBoard);
+    // Charger le modèle approprié en fonction du type de meuble sélectionné
+    if (this.formData.furnitureType === 'table') {
+      this.loadTableModel();
+    } else if (this.formData.furnitureType === 'etagere') {
+      this.loadShelfModel();
     }
-
-    this.scene.add(this.shelfMesh);
   }
 
-  private animate() : void {
+  private loadTableModel(): void {
+    // Charger le plateau
+    this.tablePath = this.formData.size === 'petit' ? this.littleFlatPaths.type_1 : this.tallFlatPaths.type_1;
+
+    this.gltfLoader.load(this.tablePath, (gltf) => {
+        this.tableMesh = gltf.scene;
+
+        // Charger la texture de bois
+        this.woodTexturePath = this.woodTextures[this.formData.woodType as keyof typeof this.woodTextures];
+        this.woodTexture = this.textureLoader.load(this.woodTexturePath);
+
+        this.woodTexture.repeat.set(1, 1);  // Ajuster la répétition de la texture
+        this.woodTexture.wrapS = THREE.RepeatWrapping;
+        this.woodTexture.wrapT = THREE.RepeatWrapping;
+
+        // Appliquer la texture et ajuster le matériau
+        this.material = new THREE.MeshStandardMaterial({
+            map: this.woodTexture,
+            roughness: 0.7,  // Ajuster la rugosité
+            metalness: 0.1   // Ajuster le métal
+        });
+
+        this.tableMesh.traverse((child) => {
+            if ((child as THREE.Mesh).isMesh) {
+              (child as THREE.Mesh).material = this.material;
+            }
+        });
+
+        // Appliquer le scaling au plateau
+        if(this.formData.size === 'petit'){
+          this.tableMesh.scale.set(2.5, 2.5, 2.5);
+        } else {
+          this.tableMesh.scale.set(3, 3, 3);
+        }
+        
+
+        this.scene.add(this.tableMesh);
+
+        // Charger les pieds après avoir chargé le plateau
+        switch (this.formData.size) {
+            case 'petit':
+                switch (this.formData.legType) {
+                    case 'type1':
+                        this.legPath = this.litteFeetPaths.type_1;
+                        break;
+                    case 'type2':
+                        this.legPath = this.litteFeetPaths.type_2;
+                        break;
+                    case 'type3':
+                        this.legPath = this.litteFeetPaths.type_3;
+                        break;
+                    default:
+                        console.error('Type de pieds inconnu pour petite table:', this.formData.legType);
+                        break;
+                }
+                break;
+            case 'grand':
+                switch (this.formData.legType) {
+                    case 'type1':
+                        this.legPath = this.tallFeetPaths.type_1;
+                        break;
+                    case 'type2':
+                        this.legPath = this.tallFeetPaths.type_2;
+                        break;
+                    default:
+                        console.error('Type de pieds inconnu pour grande table:', this.formData.legType);
+                        break;
+                }
+                break;
+            default:
+                console.error('Taille de table inconnue:', this.formData.size);
+                break;
+        }
+
+        if (this.legPath) {
+            this.gltfLoader.load(this.legPath, (legGltf) => {
+              this.legMesh = legGltf.scene;
+
+              if(this.formData.size === 'petit'){
+                this.legMesh.position.set(0, 0.32, 0)
+              } else {
+                this.legMesh.scale.set(0.6, 0.6, 0.6);
+              };
+              // Ajouter les pieds à la table
+              this.tableMesh.add(this.legMesh);
+            });
+        }
+    });
+}
+
+  
+  
+  private loadShelfModel(): void {
+    // Charger le modèle de l'étagère
+    const shelfPath = this.tallFlatPaths.type_1; 
+    this.gltfLoader.load(shelfPath, (gltf) => {
+      this.shelfMesh = gltf.scene;
+  
+      // Appliquer le scaling
+      this.shelfMesh.scale.set(1.5, 1.5, 1.5);
+  
+      this.scene.add(this.shelfMesh);
+    });
+  }  
+
+  private animate(): void {
     requestAnimationFrame(() => this.animate());
     this.renderer.render(this.scene, this.camera);
   }
 
-  protected onSubmit() : void {
+  protected onSubmit(): void {
     this.createFurniture();
   }
 }

@@ -1,45 +1,47 @@
 <div class="main-container">
+  <div class="form-container">
+      <h4 class="title-contact">Concevez votre idée</h4>
 
-    <div class="form-container">
-        
-        <h4 class="title-contact">Concevez votre idée</h4>
-
-        <form (ngSubmit)="onSubmit()">
-            <div>
+      <form (ngSubmit)="onSubmit()">
+          <div>
               <label for="furnitureType">Type de meuble :</label>
               <select id="furnitureType" [(ngModel)]="formData.furnitureType" name="furnitureType" required>
-                <option value="table">Table</option>
-                <option value="etagere">Étagère</option>
+                  <option value="table">Table</option>
+                  <option value="etagere">Étagère</option>
               </select>
-            </div>
-            <div>
+          </div>
+
+          <div>
               <label for="woodType">Type de bois :</label>
               <select id="woodType" [(ngModel)]="formData.woodType" name="woodType" required>
-                <option *ngFor="let wood of woodTypes" [value]="wood">{{ wood }}</option>
+                  <option *ngFor="let wood of woodTypes" [value]="wood">{{ wood }}</option>
               </select>
-            </div>
-            <div *ngIf="formData.furnitureType === 'table'">
+          </div>
+
+          <div *ngIf="formData.furnitureType === 'table'">
               <label for="size">Taille :</label>
               <select id="size" [(ngModel)]="formData.size" name="size" required>
-                <option *ngFor="let size of sizesTable" [value]="size">{{ size }}</option>
+                  <option *ngFor="let size of sizesTable" [value]="size">{{ size }}</option>
               </select>
-            </div>
-            <div *ngIf="formData.furnitureType === 'etagere'">
+          </div>
+
+          <div *ngIf="formData.furnitureType === 'etagere'">
               <label for="size">Taille :</label>
               <select id="size" [(ngModel)]="formData.size" name="size" required>
-                <option *ngFor="let size of sizesShelf" [value]="size">{{ size }}</option>
+                  <option *ngFor="let size of sizesShelf" [value]="size">{{ size }}</option>
               </select>
-            </div>
-            <div *ngIf="formData.furnitureType === 'table'">
+          </div>
+
+          <div *ngIf="formData.furnitureType === 'table'">
               <label for="legType">Type de pieds de table:</label>
               <select id="legType" [(ngModel)]="formData.legType" name="legType" required>
-                <option *ngFor="let leg of legTypes" [value]="leg">{{ leg }}</option>
+                  <option *ngFor="let leg of littleLegTypes" [value]="leg">{{ leg }}</option>
               </select>
-            </div>
-            <button type="submit">Aperçu</button>
-          </form>
-          <div #rendererContainer class="canvas-container" id="canvas-form-meuble"></div>
-    </div>
+          </div>
 
+          <button type="submit">Aperçu</button>
+      </form>
+
+      <div #rendererContainer class="canvas-container" id="canvas-form-meuble"></div>
+  </div>
 </div>
-
