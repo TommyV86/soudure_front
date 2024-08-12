@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import * as THREE from 'three';
 import { OrbitControls } from 'three-stdlib';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 @Component({
   selector: 'app-form-meuble',
@@ -17,6 +18,7 @@ export class FormMeubleComponent {
   private shelfMesh!: THREE.Group;
   private controls!: OrbitControls;
   private textureLoader: THREE.TextureLoader = new THREE.TextureLoader();
+  private gltfLoader: GLTFLoader = new GLTFLoader();
 
   // Form data
   protected formData = {
@@ -36,12 +38,29 @@ export class FormMeubleComponent {
     chene : 'assets/image/texture/b1.jpg',
     chataigner : '/assets/image/texture/bois.jpg'
   }
+  
+  //table basse
+  protected littleFlatPaths = {
+    type_1 : 'assets/glb/piece/table_basse/plateau/plateau_tb1.glb',
+    type_2 : 'assets/glb/piece/table_basse/plateau/plateau_tb2.glb'
+  }
 
-  // protected steelTextures = {
-  //   steelOne : 'assets/image/texture/steel.jpeg',
-  //   steelTwo : 'assets/image/texture/steel2.png',
-  //   steelThree : 'assets/image/texture/steel3.jpg'
-  // }
+  protected litteFeetPaths = {
+    type_1 : 'assets/glb/piece/table_basse/pieds/pieds_table_basse.glb',
+    type_2 : 'assets/glb/piece/table_basse/pieds/pieds_table_basse_2.glb',
+    type_3 : 'assets/glb/piece/table_basse/pieds/pieds_table_basse_3.glb',
+  }
+
+
+  //table à manger
+  protected tallFlatPaths = {
+    type_1 : 'assets/glb/piece/table/plateau/plateau_tl1.glb'
+  }
+
+  protected tallFeetPaths = {
+    type_1 : 'assets/glb/piece/table/pieds/pieds_tl1.glb',
+    type_2 : 'assets/glb/piece/table/pieds/pieds_tl2.glb'
+  }
 
   public constructor() { }
 
