@@ -1,13 +1,13 @@
 <div class="main-container">
   <div class="form-container">
       <h4 class="title-contact">Concevez votre idée</h4>
+      <h6 class="title-contact">(En développement)</h6>
 
       <form (ngSubmit)="onSubmit()">
           <div>
               <label for="furnitureType">Type de meuble :</label>
               <select id="furnitureType" [(ngModel)]="formData.furnitureType" name="furnitureType" required>
                   <option value="table">Table</option>
-                  <option value="etagere">Étagère</option>
               </select>
           </div>
 
