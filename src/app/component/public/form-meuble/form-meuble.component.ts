@@ -35,7 +35,7 @@ export class FormMeubleComponent implements OnInit {
   protected sizesShelf = ['petit', 'moyen', 'grand', 'tres grand'];
   protected woodTypes = ['chene', 'chataigner'];
   protected littleLegTypes = ['type1', 'type2', 'type3'];
-  protected tallLegTypes = ['type1', 'type2'];
+  protected tallLegTypes = ['type1', 'type2', 'type3'];
 
   protected woodTextures = {
     chene : 'assets/image/texture/b1.jpg',
@@ -59,7 +59,8 @@ export class FormMeubleComponent implements OnInit {
 
   protected tallFeetPaths = {
     type_1: 'assets/glb/piece/table/pieds/pieds_tl1.glb',
-    type_2: 'assets/glb/piece/table/pieds/pieds_tl2.glb'
+    type_2: 'assets/glb/piece/table/pieds/pieds_tl2.glb',
+    type_3: 'assets/glb/piece/table/pieds/pieds_tl3.glb',
   };
 
   private tablePath! : string | undefined;
@@ -73,40 +74,11 @@ export class FormMeubleComponent implements OnInit {
   public ngOnInit(): void { }
 
   public ngAfterViewInit() {
-    this.initThreeJS();
-    this.animate();
-  }
-
-  private initThreeJS(): void {
-    this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.renderer = new THREE.WebGLRenderer();
-    this.renderer.setSize(312, 420);
-    this.renderer.setClearColor(0x000000, 0);
-    this.rendererContainer.nativeElement.appendChild(this.renderer.domElement);
-    this.camera.position.z = 5;
-
-    const light = new THREE.DirectionalLight(0xffffff, 4);
-    const ambientLight = new THREE.AmbientLight(0xffffff, 2);
-    light.position.set(0, 1, 1).normalize();
-    light.castShadow = true;
-    light.shadow.mapSize.width = 2048;
-    light.shadow.mapSize.height = 2048;
-    light.shadow.camera.near = 0.5;
-    light.shadow.camera.far = 500;
-    light.shadow.camera.left = -50;
-    light.shadow.camera.right = 50;
-    light.shadow.camera.top = 50;
-    light.shadow.camera.bottom = -50;
-    
-    this.scene.add(light);
-    this.scene.add(ambientLight);
-
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.enableZoom = false;
-    this.controls.enablePan = false;
-    this.controls.enableRotate = true;
-    this.controls.enableDamping = false;
+    this.threeTollUtil.init(this.rendererContainer, 306, 420)
+    this.scene = this.threeTollUtil.scene;
+    this.camera = this.threeTollUtil.camera;
+    this.renderer = this.threeTollUtil.renderer;
+    this.threeTollUtil.animate();
   }
 
   private createFurniture(): void {
@@ -189,6 +161,9 @@ export class FormMeubleComponent implements OnInit {
                     case 'type2':
                         this.legPath = this.tallFeetPaths.type_2;
                         break;
+                    case 'type3':
+                        this.legPath = this.tallFeetPaths.type_3;
+                        break;
                     default:
                         console.error('Type de pieds inconnu pour grande table:', this.formData.legType);
                         break;
@@ -230,10 +205,7 @@ export class FormMeubleComponent implements OnInit {
     });
   }  
 
-  private animate(): void {
-    requestAnimationFrame(() => this.animate());
-    this.renderer.render(this.scene, this.camera);
-  }
+  
 
   protected onSubmit(): void {
     this.createFurniture();

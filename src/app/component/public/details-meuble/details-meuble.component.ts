@@ -6,6 +6,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three-stdlib';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { ThreeToolUtility } from 'src/app/utility/tool/threeTool.utility';
 
 @Component({
   selector: 'app-details-meuble',
@@ -31,7 +32,8 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
 
   public constructor(
     private route: ActivatedRoute,
-    private meubleServ: MeubleService
+    private meubleServ: MeubleService,
+    private threeToolUtil: ThreeToolUtility
   ){}
 
   public ngOnInit() : void {
@@ -46,9 +48,12 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
 
     this.meubleSubscription = this.meubleSubject.subscribe(meubleSubbed => {
       if (this.canvasRef && meubleSubbed) {
-        this.initThreeJS();
+        this.threeToolUtil.init(this.canvasRef, window.innerWidth, window.innerHeight)
+        this.scene = this.threeToolUtil.scene;
+        this.camera = this.threeToolUtil.camera;
+        this.renderer = this.threeToolUtil.renderer;
         this.loadModel();
-        this.animate();
+        this.threeToolUtil.animate();
       }
     })
   }
@@ -76,48 +81,6 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
     })
   }
 
-  //------methodes pour la manipulation des objets 3d---------//
-  private initThreeJS(): void {
-    this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.camera.position.z = 5;
-
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setClearColor(0x000000, 0); // Le second paramètre 0 rend le fond transparent
-    this.renderer.setPixelRatio(window.devicePixelRatio);
-
-    this.canvasRef.nativeElement.appendChild(this.renderer.domElement);
-
-    // Ajouter des lumières à la scène
-    const light = new THREE.DirectionalLight(0xffffff, 4);
-    const ambientLight = new THREE.AmbientLight(0xffffff, 2);
-    light.position.set(0, 1, 1).normalize();
-    light.castShadow = true;
-    light.shadow.mapSize.width = 2048;
-    light.shadow.mapSize.height = 2048;
-    light.shadow.camera.near = 0.5;
-    light.shadow.camera.far = 500;
-    light.shadow.camera.left = -50;
-    light.shadow.camera.right = 50;
-    light.shadow.camera.top = 50;
-    light.shadow.camera.bottom = -50;
-    this.scene.add(light);
-    this.scene.add(ambientLight);
-
-    // Controls
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    // Désactiver le zoom et le déplacement
-    this.controls.enableZoom = false;
-    this.controls.enablePan = false;
-    
-    // Désactiver la rotation de la caméra, uniquement l'objet tourne sur lui-même
-    this.controls.enableRotate = true;
-
-    // Désactiver l'inertie pour un contrôle plus précis
-    this.controls.enableDamping = false;
-  }
-
   private loadModel(): void {
     const loader = new GLTFLoader();
     loader.load(`assets/glb/${this.meuble._typeMeubleDto?._nom}/${this.productName}.glb`, (gltf) => {
@@ -128,12 +91,6 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
     }, undefined, function (error) {
       console.error(error);
     });
-  }
-
-  private animate = (): void => {
-    requestAnimationFrame(this.animate);
-    this.controls.update();
-    this.renderer.render(this.scene, this.camera);
   }
 
   private onWindowResize(): void {
