@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { ConstantUtility } from 'src/app/utility/constant/constant.utility';
 import { ThreeToolUtility } from 'src/app/utility/tool/threeTool.utility';
 import * as THREE from 'three';
 import { OrbitControls } from 'three-stdlib';
@@ -22,54 +23,25 @@ export class FormMeubleComponent implements OnInit {
   private gltfLoader: GLTFLoader = new GLTFLoader();
   private legMesh!: THREE.Group<THREE.Object3DEventMap>
   private woodTexture!: THREE.Texture;
-
-  // Form data
-  protected formData = {
-    furnitureType: 'table',
-    woodType: 'chene',
-    size: 'petit',
-    legType: 'type1'
-  };
-
-  protected sizesTable = ['petit', 'grand'];
-  protected sizesShelf = ['petit', 'moyen', 'grand', 'tres grand'];
-  protected woodTypes = ['chene', 'chataigner'];
-  protected littleLegTypes = ['type1', 'type2', 'type3'];
-  protected tallLegTypes = ['type1', 'type2', 'type3'];
-
-  protected woodTextures = {
-    chene : 'assets/image/texture/b1.jpg',
-    chataigner : '/assets/image/texture/bois.jpg'
-  }  
-  
-  protected littleFlatPaths = {
-    type_1: 'assets/glb/piece/table_basse/plateau/plateau_tb1.glb',
-    type_2: 'assets/glb/piece/table_basse/plateau/plateau_tb2.glb'
-  };
-
-  protected tallFlatPaths = {
-    type_1: 'assets/glb/piece/table/plateau/plateau_tl1.glb'
-  };
-
-  protected litteFeetPaths = {
-    type_1: 'assets/glb/piece/table_basse/pieds/pieds_table_basse.glb',
-    type_2: 'assets/glb/piece/table_basse/pieds/pieds_table_basse_2.glb',
-    type_3: 'assets/glb/piece/table_basse/pieds/pieds_table_basse_3.glb'
-  };
-
-  protected tallFeetPaths = {
-    type_1: 'assets/glb/piece/table/pieds/pieds_tl1.glb',
-    type_2: 'assets/glb/piece/table/pieds/pieds_tl2.glb',
-    type_3: 'assets/glb/piece/table/pieds/pieds_tl3.glb',
-  };
+  private material!: THREE.MeshStandardMaterial;
 
   private tablePath! : string | undefined;
   private legPath! : string | undefined;
   private woodTexturePath!: string | undefined;
-  private material!: THREE.MeshStandardMaterial;
+  public isLoading: boolean = false;
+  
+  // Form data
+  protected formData = this.constantUtil.formData;
+  protected woodTypes = this.constantUtil.woodTypes;
+  protected sizesTable = this.constantUtil.sizesTable;
+  protected sizesShelf = this.constantUtil.sizesShelf;
+  protected littleLegTypes = this.constantUtil.littleLegTypes;
+  protected tallLegTypes = this.constantUtil.tallLegTypes;
 
-
-  public constructor(private threeTollUtil: ThreeToolUtility) { }
+  public constructor(
+    private threeTollUtil: ThreeToolUtility,
+    private constantUtil: ConstantUtility
+  ) { }
 
   public ngOnInit(): void { }
 
@@ -90,22 +62,25 @@ export class FormMeubleComponent implements OnInit {
     }
 
     // Charger le modèle approprié en fonction du type de meuble sélectionné
-    if (this.formData.furnitureType === 'table') {
+    if (this.constantUtil.formData.furnitureType === 'table') {
       this.loadTableModel();
-    } else if (this.formData.furnitureType === 'etagere') {
+    } else if (this.constantUtil.formData.furnitureType === 'etagere') {
       this.loadShelfModel();
     }
   }
 
   private loadTableModel(): void {
     // Charger le plateau
-    this.tablePath = this.formData.size === 'petit' ? this.littleFlatPaths.type_1 : this.tallFlatPaths.type_1;
+    this.isLoading = true;
+
+    this.tablePath = this.constantUtil.formData.size === 'petit' ? 
+                     this.constantUtil.littleFlatPaths.type_1 : this.constantUtil.tallFlatPaths.type_1;
 
     this.gltfLoader.load(this.tablePath, (gltf) => {
         this.tableMesh = gltf.scene;
 
         // Charger la texture de bois
-        this.woodTexturePath = this.woodTextures[this.formData.woodType as keyof typeof this.woodTextures];
+        this.woodTexturePath = this.constantUtil.woodTextures[this.constantUtil.formData.woodType as keyof typeof this.constantUtil.woodTextures];
         this.woodTexture = this.textureLoader.load(this.woodTexturePath);
 
         this.woodTexture.repeat.set(1, 1);  // Ajuster la répétition de la texture
@@ -126,51 +101,50 @@ export class FormMeubleComponent implements OnInit {
         });
 
         // Appliquer le scaling au plateau
-        if(this.formData.size === 'petit'){
+        if(this.constantUtil.formData.size === 'petit'){
           this.tableMesh.scale.set(2.5, 2.5, 2.5);
         } else {
           this.tableMesh.scale.set(3, 3, 3);
         }
         
 
-        this.scene.add(this.tableMesh);
 
         // Charger les pieds après avoir chargé le plateau
-        switch (this.formData.size) {
+        switch (this.constantUtil.formData.size) {
             case 'petit':
-                switch (this.formData.legType) {
+                switch (this.constantUtil.formData.legType) {
                     case 'type1':
-                        this.legPath = this.litteFeetPaths.type_1;
+                        this.legPath = this.constantUtil.litteFeetPaths.type_1;
                         break;
                     case 'type2':
-                        this.legPath = this.litteFeetPaths.type_2;
+                        this.legPath = this.constantUtil.litteFeetPaths.type_2;
                         break;
                     case 'type3':
-                        this.legPath = this.litteFeetPaths.type_3;
+                        this.legPath = this.constantUtil.litteFeetPaths.type_3;
                         break;
                     default:
-                        console.error('Type de pieds inconnu pour petite table:', this.formData.legType);
+                        console.error('Type de pieds inconnu pour petite table:', this.constantUtil.formData.legType);
                         break;
                 }
                 break;
             case 'grand':
-                switch (this.formData.legType) {
+                switch (this.constantUtil.formData.legType) {
                     case 'type1':
-                        this.legPath = this.tallFeetPaths.type_1;
+                        this.legPath = this.constantUtil.tallFeetPaths.type_1;
                         break;
                     case 'type2':
-                        this.legPath = this.tallFeetPaths.type_2;
+                        this.legPath = this.constantUtil.tallFeetPaths.type_2;
                         break;
                     case 'type3':
-                        this.legPath = this.tallFeetPaths.type_3;
+                        this.legPath = this.constantUtil.tallFeetPaths.type_3;
                         break;
                     default:
-                        console.error('Type de pieds inconnu pour grande table:', this.formData.legType);
+                        console.error('Type de pieds inconnu pour grande table:', this.constantUtil.formData.legType);
                         break;
                 }
                 break;
             default:
-                console.error('Taille de table inconnue:', this.formData.size);
+                console.error('Taille de table inconnue:', this.constantUtil.formData.size);
                 break;
         }
 
@@ -178,13 +152,16 @@ export class FormMeubleComponent implements OnInit {
             this.gltfLoader.load(this.legPath, (legGltf) => {
               this.legMesh = legGltf.scene;
 
-              if(this.formData.size === 'petit'){
+              if(this.constantUtil.formData.size === 'petit'){
                 this.legMesh.position.set(0, 0.32, 0)
               } else {
                 this.legMesh.scale.set(0.6, 0.6, 0.6);
               };
-              // Ajouter les pieds à la table
-              this.tableMesh.add(this.legMesh);
+
+              this.isLoading = false;
+              //Ajout de la table à la scene
+              this.scene.add(this.tableMesh);
+              this.tableMesh.add(this.legMesh);// Ajouter les pieds à la table
             });
         }
     });
@@ -194,7 +171,7 @@ export class FormMeubleComponent implements OnInit {
   
   private loadShelfModel(): void {
     // Charger le modèle de l'étagère
-    const shelfPath = this.tallFlatPaths.type_1; 
+    const shelfPath = this.constantUtil.tallFlatPaths.type_1; 
     this.gltfLoader.load(shelfPath, (gltf) => {
       this.shelfMesh = gltf.scene;
   

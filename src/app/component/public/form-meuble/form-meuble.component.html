@@ -39,7 +39,14 @@
               </select>
           </div>
 
-          <button type="submit">Aperçu</button>
+          <div *ngIf="!isLoading">
+            <button type="submit" [disabled]="isLoading">Aperçu</button>
+          </div>
+          
+          <div *ngIf="isLoading" class="loading">
+            <div class="spinner-border text-warning" role="status"></div>
+          </div>
+          
       </form>
 
       <div #rendererContainer class="canvas-container" id="canvas-form-meuble"></div>
