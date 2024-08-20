@@ -1,5 +1,11 @@
 .card{
-    margin: -6% 5% 25% 65%;
+    position: absolute; /* ou fixed si vous voulez qu'elle reste à la même place même en scrollant */
+    top: 35%;  /* ajustez selon vos besoins */
+    right: 20%; /* ajustez selon vos besoins */
+}
+
+.canvas-container {
+    margin-bottom: 25%;
 }
 
 .card-body{
@@ -15,8 +21,11 @@
     margin-top: 2% !important; 
 }
 
-@media (max-width: 1440px) {
+@media (max-width: 1440px) { 
     .card{
+        position: unset; /* ou fixed si vous voulez qu'elle reste à la même place même en scrollant */
+        top: 0;  /* ajustez selon vos besoins */
+        right: 0; /* ajustez selon vos besoins */
         width: 59%;
         height: 50%;
         margin: 35% 5% 20% 22%;
@@ -25,5 +34,9 @@
     .loading{
         margin-top: 0 !important; 
         margin-bottom: 100% !important;
+    }
+
+    .canvas-container {
+        margin-bottom: 0%;
     }
 }
