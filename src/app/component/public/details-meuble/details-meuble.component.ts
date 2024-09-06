@@ -119,10 +119,18 @@ export class DetailsMeubleComponent implements AfterViewInit, OnDestroy {
       if (this.meuble._longueur != null && this.meuble._longueur >= 190) {
         this.model.scale.set(1.5, 1.5, 1.5);
       // petits meubles
-      } else if (this.meuble._longueur != null && this.meuble._longueur >= 100 && this.meuble._typeMeubleDto?._nom != 'étagere') {
-        this.model.scale.set(3, 3, 3);   
+      } else if (this.meuble._longueur != null 
+              && this.meuble._longueur >= 100 
+              && this.meuble._typeMeubleDto?._nom != 'étagere' 
+              && this.meuble._nom != 'Table Basse Omega'
+      ) {
+        this.model.scale.set(3, 3, 3);
       // etageres     
-      } else if (this.meuble._hauteur != null && this.meuble._hauteur >= 147) {
+      } else if (this.meuble._longueur != null 
+              && this.meuble._nom == 'Table Basse Omega' 
+              || this.meuble._hauteur != null 
+              && this.meuble._hauteur >= 147 
+      ) {
         this.model.scale.set(2, 2, 2);
       }
     }

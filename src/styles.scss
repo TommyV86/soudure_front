@@ -2,15 +2,19 @@
 body{
     font-weight: 600;
     font-style: normal;
-    background-image: url('../src/assets/image/texture/body.jpeg');  
+    background-image: url('../src/assets/image/texture/rock.jpg');  
     background-size: cover; /* Pour couvrir toute la navbar */
     background-position: center; /* Centrer l'image */
     background-repeat: no-repeat; /* Pour éviter la répétition de l'image */
 }
 
 .title-main{
-    margin: 8% 5% 5% 29%;
-    color: rgb(209, 209, 209);
+    margin: 8% 5% 5% 5%;
+    padding: 5%;
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    background-image: url('../src/assets/image/texture/steel3.jpg');
+    text-align: center;
 }
 
 .card-container{
@@ -21,11 +25,12 @@ body{
 }
 
 .card{
-    border: 0.5px solid rgb(94, 94, 94);
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px 2px grey;
     margin: 10px; 
     width: 15rem;
+}
+
+.title-main, .card{
+    border-radius: 10px;
 }
 
 .card-body{
@@ -53,11 +58,13 @@ body{
     margin-left: 25%;
 }
 
-.navbar, .card, footer{
+.navbar, .card, footer, .title-main{
     background-image: url('../src/assets/image/texture/steel3.jpg');
     background-size: cover; /* Pour couvrir toute la navbar */
     background-position: center; /* Centrer l'image */
     background-repeat: no-repeat; /* Pour éviter la répétition de l'image */
+    border: 0.5px solid rgb(94, 94, 94);
+    box-shadow: 2px 2px 10px 2px grey;
 }
 
 .navbar{
@@ -125,12 +132,29 @@ textarea{
     border-radius: 15px;
 }
 
+/* Lien non visité */
+a:link {
+    color: rgb(0, 37, 158); /* Couleur du lien par défaut */
+    text-decoration: none;
+}
+  
+/* Lien visité */
+a:visited {
+    color: purple; /* Couleur pour les liens visités */
+}
+
+/* Lien au survol */
+a:hover {
+    color: rgb(186, 0, 0); /* Changer la couleur lorsqu'on survole */
+    cursor: pointer; /* Changer le curseur en "pointer" */
+}
+
+/* Lien actif (cliqué) */
+a:active {
+    color: orange; 
+}  
 
 @media (max-width: 1550px) {
-
-    .title-main{
-        margin: 8% 5% 5% 23%;
-    }
 
     .card-container{
         margin-left: 2.3%;
@@ -169,7 +193,6 @@ textarea{
 
     .title-main{
         margin: 25% 5% 5% 8%;
-        text-align: center;
     }
     
     .nav-item{
