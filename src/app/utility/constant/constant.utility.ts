@@ -24,8 +24,8 @@ export class ConstantUtility {
     public tallLegTypes = ['type1', 'type2', 'type3'];
 
     public woodTextures = {
-        chene : 'assets/image/texture/b1.jpg',
-        chataigner : '/assets/image/texture/bois.jpg'
+        chene : 'assets/image/texture/b1.webp',
+        chataigner : '/assets/image/texture/bois.webp'
     }  
     
     public littleFlatPaths = {

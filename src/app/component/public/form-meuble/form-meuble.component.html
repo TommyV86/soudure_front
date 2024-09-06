@@ -11,24 +11,24 @@
               </select>
           </div>
 
-          <div>
-              <label for="woodType">Type de bois :</label>
-              <select id="woodType" [(ngModel)]="formData.woodType" name="woodType" required>
-                  <option *ngFor="let wood of woodTypes" [value]="wood">{{ wood }}</option>
-              </select>
-          </div>
-
           <div *ngIf="formData.furnitureType === 'table'">
-              <label for="size">Taille :</label>
-              <select id="size" [(ngModel)]="formData.size" name="size" required>
-                  <option *ngFor="let size of sizesTable" [value]="size">{{ size }}</option>
-              </select>
-          </div>
+            <label for="size">Taille :</label>
+            <select id="size" [(ngModel)]="formData.size" name="size" required>
+                <option *ngFor="let size of sizesTable" [value]="size">{{ size }}</option>
+            </select>
+            </div>
 
           <div *ngIf="formData.furnitureType === 'etagere'">
               <label for="size">Taille :</label>
               <select id="size" [(ngModel)]="formData.size" name="size" required>
                   <option *ngFor="let size of sizesShelf" [value]="size">{{ size }}</option>
+              </select>
+          </div>
+
+          <div>
+              <label for="woodType">Type de bois :</label>
+              <select id="woodType" [(ngModel)]="formData.woodType" name="woodType" required>
+                  <option *ngFor="let wood of woodTypes" [value]="wood">{{ wood }}</option>
               </select>
           </div>
 

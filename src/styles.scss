@@ -2,7 +2,7 @@
 body{
     font-weight: 600;
     font-style: normal;
-    background-image: url('../src/assets/image/texture/rock.jpg');  
+    background-color: rgb(182, 182, 182);  
     background-size: cover; /* Pour couvrir toute la navbar */
     background-position: center; /* Centrer l'image */
     background-repeat: no-repeat; /* Pour éviter la répétition de l'image */
@@ -13,7 +13,6 @@ body{
     padding: 5%;
     color: rgb(0, 0, 0);
     font-weight: 600;
-    background-image: url('../src/assets/image/texture/steel3.jpg');
     text-align: center;
 }
 
@@ -58,8 +57,8 @@ body{
     margin-left: 25%;
 }
 
-.navbar, .card, footer, .title-main{
-    background-image: url('../src/assets/image/texture/steel3.jpg');
+.navbar, .card, footer, .title-main, .form-container{
+    background-image: url('../src/assets/image/texture/steel3.webp');
     background-size: cover; /* Pour couvrir toute la navbar */
     background-position: center; /* Centrer l'image */
     background-repeat: no-repeat; /* Pour éviter la répétition de l'image */
@@ -225,7 +224,6 @@ a:active {
     .form-container{
         width: 90%; 
         margin: 25% 2% 4% 5%;
-        background-image: url('../src/assets/image/texture/steel3.jpg');
     }
 
     input, textarea{
